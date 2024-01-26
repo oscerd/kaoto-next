@@ -1,18 +1,15 @@
-name: Release Kaoto next on tag push
+name: Release Kaoto netx
 
 on:
   push:
     tags:
-      - "v*"
+      - "v*.*.*"
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-    - uses: actions/checkout@v3
-    - uses: ncipollo/release-action@v1
-      with:
-        body: "New release for tag"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
