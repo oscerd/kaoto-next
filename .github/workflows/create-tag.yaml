@@ -1,26 +1,21 @@
 name: Create Kaoto-next tag
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      tag_version:
+        type: The tag to release
+        description: The tag version we want to release
+      message:
+        required: true
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release-pr') == true
-    runs-on: ubuntu-22.04
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.merge_commit_sha }}
-        fetch-depth: '0'
 
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@1.64.0 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-        WITH_V: true
-        PRERELEASE: false
+        CUSTOM_TAG: ${{ github.event.inputs.tag_version }}
