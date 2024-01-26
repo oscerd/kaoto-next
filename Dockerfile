@@ -9,5 +9,3 @@ ADD nginx/nginx.conf /etc/nginx/nginx.conf
 ADD packages/ui/dist .
 
 CMD ["nginx", "-g", "daemon off;"]
-
-
