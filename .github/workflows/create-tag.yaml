@@ -5,7 +5,6 @@ on:
       tag_version:
         type: The tag to release
         description: The tag version we want to release
-      message:
         required: true
 
 jobs:
