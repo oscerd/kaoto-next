@@ -20,3 +20,5 @@ If you discover a vulnerability in the Kaoto project, we encourage you to report
 - If the vulnerability is declined, we will provide an explanation.
 
 Please note that the safety and security of our users are our top priorities, and we appreciate your cooperation and responsible disclosure.
+
+
