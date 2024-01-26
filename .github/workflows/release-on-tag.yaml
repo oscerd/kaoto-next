@@ -1,9 +1,9 @@
 name: Release Kaoto next on tag push
 
-on: 
+on:
   push:
     tags:
-    - '*'
+      - "v*"
 
 jobs:
 
