@@ -6,10 +6,6 @@ on:
         type: The tag to release
         description: The tag version we want to release
         required: true
-      commit_sha:
-        type: Point the tag/release to a specific commit sha
-        description: The commit sha to tag
-        required: false
 
 permissions:
   actions: write
