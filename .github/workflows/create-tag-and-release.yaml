@@ -14,8 +14,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read, write
+    permissions: write-all
     steps:
     
     - uses: actions/checkout@v3
