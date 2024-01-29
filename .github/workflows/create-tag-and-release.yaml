@@ -6,23 +6,26 @@ on:
         type: The tag to release
         description: The tag version we want to release
         required: true
-      commit:
+      commit_sha:
         type: Point the tag/release to a specific commit sha
         description: The commit sha to tag
         required: false
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-    
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.merge_commit_sha }}
-        fetch-depth: '0'
-    - uses: avakar/tag-and-release@v1
-      with:
-        tag_name: ${{ github.event.inputs.tag_version }}
-        commit: ${{ github.event.inputs.commit }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: ${{ steps.tag_version.inputs.custom_tag }}
+          commit_sha: ${{ steps.tag_version.inputs.commit_sha }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
