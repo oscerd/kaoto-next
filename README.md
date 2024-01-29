@@ -25,6 +25,7 @@ https://kaotoio.github.io/kaoto-next/
 
 _For more information on Vite, check [Vite's documentation](https://vitejs.dev/config/)._
 
+
 ## Getting Started
 ### Clone the Repository
 First, clone the repository to your local machine.
