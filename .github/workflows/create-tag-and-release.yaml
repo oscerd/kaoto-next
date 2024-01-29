@@ -23,8 +23,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           custom_tag: ${{ github.event.inputs.tag_version }}
-          commit_sha: ${{ github.event.inputs.commit_sha }}
           create_annotated_tag: true
+          tag_prefix: ""
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
