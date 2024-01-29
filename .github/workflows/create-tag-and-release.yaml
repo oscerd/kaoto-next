@@ -11,6 +11,9 @@ on:
         description: The commit sha to tag
         required: false
 
+permissions:
+  actions: write
+
 jobs:
   build:
     permissions:
