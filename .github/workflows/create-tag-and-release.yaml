@@ -1,4 +1,4 @@
-name: Create Kaoto-next tag
+name: Create Kaoto-next tag and release
 on:
   workflow_dispatch:
     inputs:
@@ -10,16 +10,12 @@ on:
         type: Point the tag/release to a specific commit sha
         description: The commit sha to tag
         required: false
-      release_name:
-        type: The release name
-        description: A Release name to use
-        required: false
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     permissions:
-      contents: write-all
+      contents: write
     steps:
     
     - uses: actions/checkout@v3
@@ -30,6 +26,5 @@ jobs:
       with:
         tag_name: ${{ github.event.inputs.tag_version }}
         commit: ${{ github.event.inputs.commit }}
-        release_name: ${{ github.event.inputs.release_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
