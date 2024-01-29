@@ -6,9 +6,11 @@ on:
         type: The tag to release
         description: The tag version we want to release
         required: true
-
-permissions:
-  actions: write
+      branch:
+        type: The branch we want to tag and to release from
+        description: The tag version we want to release
+        required: false
+        default: main
 
 jobs:
   build:
@@ -25,6 +27,7 @@ jobs:
           custom_tag: ${{ github.event.inputs.tag_version }}
           create_annotated_tag: true
           tag_prefix: ""
+          release_branches: ${{ github.event.inputs.branch }}
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
