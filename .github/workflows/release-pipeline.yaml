@@ -50,6 +50,37 @@ jobs:
       - name: Build @kaoto-next/ui package in lib mode
         run: yarn workspace @kaoto-next/ui run build:lib
 
+      - name: "🔧 Persist UI Dist"
+        uses: actions/upload-artifact@v4
+        with:
+          name: "kaoto-ui-${{ github.run_id }}"
+          path: "${{ runner.temp }}/kaoto-ui.tgz"
+          retention-days: 1
+
+      - name: "🛰️ Extract UI Dist"
+        shell: bash
+        run: |
+          mkdir -p packages/ui/dist
+          tar -xzf "${{ runner.temp }}/kaoto-ui.tgz" -C packages/ui/dist
+
+      - name: "🛰️ Login to Container Registry"
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+
+      - name: "🔧 Build Container Image"
+        shell: bash
+        # TODO: the container image name should be configurable via vars/secrets
+        run: |
+          docker build -t "quay.io/kaotoio/kaoto-app:main" .
+
+      - name: "📤 Upload Container Image"
+        shell: bash
+        run: |
+          docker push quay.io/kaotoio/kaoto-app:main
+
       # Version and publish
       - name: 'Version and publish'
         env:
