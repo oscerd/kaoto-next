@@ -73,18 +73,19 @@ jobs:
           mkdir -p packages/ui/dist
           tar -xzf "${{ runner.temp }}/kaoto-ui.tgz" -C packages/ui/dist
 
-      - name: "🛰️ Login to Container Registry"
-        uses: docker/login-action@v3
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: "🔧 Build Container Image"
         shell: bash
         # TODO: the container image name should be configurable via vars/secrets
         run: |
           docker build -t "quay.io/kaotoio/kaoto-app:${{ github.event.inputs.tag_version }}" .
+
+      - name: "🛰️ Login to Container Registry"
+        uses: docker/login-action@v3
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: "📤 Upload Container Image"
         shell: bash
