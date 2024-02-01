@@ -84,12 +84,12 @@ jobs:
         shell: bash
         # TODO: the container image name should be configurable via vars/secrets
         run: |
-          docker build -t "quay.io/kaotoio/kaoto-app:main" .
+          docker build -t "quay.io/kaotoio/kaoto-app:${{ github.event.inputs.tag_version }}" .
 
       - name: "📤 Upload Container Image"
         shell: bash
         run: |
-          docker push quay.io/kaotoio/kaoto-app:main
+          docker push quay.io/kaotoio/kaoto-app:${{ github.event.inputs.tag_version }}
 
       # Version and publish
       - name: 'Version and publish'
