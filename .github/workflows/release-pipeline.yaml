@@ -50,6 +50,16 @@ jobs:
       - name: Build @kaoto-next/ui package in lib mode
         run: yarn workspace @kaoto-next/ui run build:lib
 
+      - name: "🔧 Build packages"
+        run: |
+          yarn workspaces foreach --verbose --topological-dev --exclude @kaoto-next/camel-catalog run build
+
+      - name: "🔧 Tar UI Dist"
+        shell: bash
+        run: |
+          tar -czf ${{ runner.temp }}/kaoto-ui.tgz -C packages/ui/dist .
+          ls -lh ${{ runner.temp }}/kaoto-ui.tgz
+
       - name: "🔧 Persist UI Dist"
         uses: actions/upload-artifact@v4
         with:
