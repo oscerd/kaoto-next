@@ -40,6 +40,9 @@ jobs:
       - tag-and-release
       
     steps:
+      - name: "🛰️ Checkout source code"
+        uses: actions/checkout@v4
+        
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
@@ -75,6 +78,15 @@ jobs:
       - npm-release
       
     steps:
+      - name: "🛰️ Checkout source code"
+        uses: actions/checkout@v4
+
+      - name: "🛰️ Download UI Dist"
+        uses: actions/download-artifact@v4
+        with:
+          name: kaoto-ui-${{ github.run_id }}
+          path: "${{ runner.temp }}"    
+    
       - name: "🔧 Build packages"
         run: |
           yarn workspaces foreach --verbose --topological-dev --exclude @kaoto-next/camel-catalog run build
