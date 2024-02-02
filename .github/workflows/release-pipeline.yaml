@@ -122,14 +122,14 @@ jobs:
         run: |
           docker push quay.io/kaotoio/kaoto-app:${{ github.event.inputs.tag_version }}
           
-        if:  ${{ github.event.inputs.stable }} 
-          steps:
-            - name: "🔧 Build Container Image"
-              shell: bash
-              run: |
-                docker build -t "quay.io/kaotoio/kaoto-app:stable" .
+      - name: "🔧 Build Container Image"
+        shell: bash
+        run: |
+          docker build -t "quay.io/kaotoio/kaoto-app:stable" .
+        if: ${{ github.event.inputs.stable }}
 
-            - name: "📤 Upload Container Image"
-              shell: bash
-              run: |
-                docker push quay.io/kaotoio/kaoto-app:stable
+      - name: "📤 Upload Container Image"
+        shell: bash
+        run: |
+          docker push quay.io/kaotoio/kaoto-app:stable
+        if: ${{ github.event.inputs.stable }}
